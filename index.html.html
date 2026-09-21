@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Emily 🌻</title>
+<style>
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Georgia,"Times New Roman",serif}
+body{overflow:hidden;background:radial-gradient(circle at 50% 35%,#fff8cf 0,#ffe88a 22%,#f7b733 55%,#b86b00 100%);color:#5b3500}
+#sky{position:fixed;inset:0;overflow:hidden}
+.petal{position:absolute;top:-40px;font-size:22px;animation:fall linear infinite;opacity:.85}
+@keyframes fall{to{transform:translateY(115vh) rotate(540deg);opacity:.1}}
+.card{position:relative;z-index:5;width:min(92vw,700px);margin:8vh auto 0;padding:42px 30px 35px;text-align:center;border:1px solid rgba(255,255,255,.65);border-radius:30px;background:rgba(255,251,221,.82);box-shadow:0 25px 70px rgba(91,53,0,.28);backdrop-filter:blur(9px)}
+.hidden{display:none}.small{font-size:18px;letter-spacing:2px}.title{font-size:clamp(44px,10vw,82px);margin:12px 0;color:#9b5b00;text-shadow:2px 3px 0 #fff0a3}.subtitle{font-size:23px;line-height:1.55;margin:15px auto;max-width:560px}
+.flowers{font-size:65px;letter-spacing:-8px;animation:bloom 2.5s ease-in-out infinite alternate}@keyframes bloom{to{transform:scale(1.07) rotate(1deg)}}
+button{border:0;border-radius:999px;padding:15px 27px;font-size:17px;font-weight:bold;cursor:pointer;background:#e5a900;color:white;box-shadow:0 9px 20px rgba(116,72,0,.25);margin:8px}
+button:hover{transform:translateY(-2px)} #letter{font-size:21px;line-height:1.8;white-space:pre-line}
+.signature{margin-top:25px;font-size:24px;font-style:italic;color:#875000}
+.music{font-size:13px;opacity:.7;margin-top:10px}
+#final{font-size:18px;line-height:1.6}
+.confetti{position:fixed;z-index:20;top:50%;left:50%;font-size:25px;animation:burst 1.8s ease-out forwards;pointer-events:none}
+@keyframes burst{to{transform:translate(calc(var(--x)*1px),calc(var(--y)*1px)) rotate(720deg);opacity:0}}
+</style>
+</head>
+<body>
+<div id="sky"></div>
+
+<section class="card" id="intro">
+  <div class="flowers">🌻🌻🌻</div>
+  <div class="small">UNA PEQUEÑA SORPRESA PARA TI</div>
+  <h1 class="title">Emily</h1>
+  <p class="subtitle">Hay flores que se regalan… y hay personas que hacen que todo florezca. 💛</p>
+  <button onclick="openLetter()">Abrir mi sorpresa 🌻</button>
+  <div class="music">♪ Until I Found You — Stephen Sanchez</div>
+</section>
+
+<section class="card hidden" id="letterCard">
+  <div class="flowers">🌻✨🌻</div>
+  <div id="letter"></div>
+  <div class="signature">Con cariño,<br><b>Frank</b> 💛</div>
+  <button onclick="celebrate()">Un último detalle 🌻</button>
+  <button onclick="shareWhatsApp()">Compartir por WhatsApp 💬</button>
+  <div class="music">♪ Until I Found You — Stephen Sanchez</div>
+</section>
+
+<script>
+const text = `Emily,
+
+Hoy quería regalarte flores amarillas, pero pensé que unas flores que duran un instante no eran suficientes para decirte lo que quería.
+
+Así que preparé este pequeño rincón para ti. 🌻
+
+Que estas flores te recuerden que hay personas capaces de iluminar un día simplemente con una sonrisa, y tú eres una de esas personas.
+
+Espero que hoy recibas muchos motivos para sonreír, que tus días estén llenos de momentos bonitos y que nunca te falten razones para sentirte especial.
+
+Y si estas flores lograron sacarte aunque sea una pequeña sonrisa… entonces ya valió la pena prepararte esta sorpresa. 💛
+
+Feliz día de las flores amarillas, Emily. 🌻✨`;
+
+function petals(){
+  const sky=document.getElementById("sky");
+  for(let i=0;i<35;i++){
+    const p=document.createElement("div"); p.className="petal";
+    p.textContent=Math.random()>.5?"🌻":"💛";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(5+Math.random()*8)+"s";
+    p.style.animationDelay=(-Math.random()*10)+"s";
+    p.style.fontSize=(14+Math.random()*22)+"px";
+    sky.appendChild(p);
+  }
+}
+petals();
+
+function openLetter(){
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("letterCard").classList.remove("hidden");
+  typeWriter(text,0);
+}
+function typeWriter(t,i){
+  const el=document.getElementById("letter");
+  if(i<t.length){el.textContent+=t.charAt(i);setTimeout(()=>typeWriter(t,i+1),18)}
+}
+function celebrate(){
+  for(let i=0;i<35;i++){
+    const c=document.createElement("div");c.className="confetti";
+    c.textContent=Math.random()>.5?"🌻":"💛";
+    c.style.setProperty("--x",(Math.random()*900-450));
+    c.style.setProperty("--y",(Math.random()*700-350));
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),1900);
+  }
+}
+function shareWhatsApp(){
+  const msg=`🌻💛 Emily, preparé una pequeña sorpresa para ti... Espero que estas flores te saquen una sonrisa. — Frank`;
+  window.open("https://wa.me/?text="+encodeURIComponent(msg)," _blank");
+}
+</script>
+</body>
+</html>
